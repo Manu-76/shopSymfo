@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Brand index{% endblock %}
+
+{% block body %}
+
+    <div class="d-flex align-items-center pt-3 ps-3 gap-3">
+        <h1>Index des marques</h1>
+        <a href="{{ path('app_admin_brand_new') }}" class="btn btn-info">Créer</a>
+    </div>
+
+    <div class="container container-global my-5 p-3">
+    {# text-center va centrer horizontalement les colonnes et align-middle va centrer verticalement chaque ligne du tableau #}
+        <table class="table text-center align-middle">
+            <thead>
+                <tr>
+                    {# <th>Id</th> #}
+                    <th>Nom de la marque</th>
+                    <th>Image de la marque</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            
+            {% for brand in brands %}
+                <tr>
+                    {# <td>{{ brand.id }}</td> #}
+                    <td>{{ brand.name }}</td>
+                    <td>
+                        <img src="{{ asset('images/brands/' ~ brand.imageName) }}" alt="{{ 'Logo de ' ~ brand.name }}" class="img-shoe">
+                    </td>
+                    <td>
+                        <a href="{{ path('app_admin_brand_show', {'id': brand.id}) }}" class="btn btn-secondary">Voir</a>
+                        <a href="{{ path('app_admin_brand_edit', {'id': brand.id}) }}" class="btn btn-primary">Modifier</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">Aucune marque n'a été créée</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
+

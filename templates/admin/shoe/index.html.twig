@@ -1,0 +1,77 @@
+{% extends 'baseAdmin.html.twig' %}
+
+{% block title %}Shoe index{% endblock %}
+
+{% block body %}
+
+    <div class="d-flex align-items-center pt-3 ps-3 gap-3">
+        <h1>
+            Index des chaussures
+        </h1>
+        <a href="{{ path('app_admin_shoe_new') }}" class="btn btn-info">
+            Créer
+        </a>
+    </div>
+
+    <div class="container container-global my-5 p-3">
+        <table class="table text-center align-middle">
+            <thead>
+                <tr>
+                    <th>Modèle</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                    <th>Prix</th>
+                    <th>Tailles disponibles</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for shoe in shoes %}
+                <tr>
+                    {# <td>{{dump(shoe.brand.name) }}</td> #}
+                    <td>{{ shoe.model ~ ' (' ~ shoe.brand.name ~ ')' }}</td>
+                    <td>{{ shoe.description }}</td>
+                    <td>
+                        <img src="{{ asset('images/shoes/' ~ shoe.imageName) }}" alt="{{ 'Image de ' ~ shoe.model }}" class="img-shoe">
+                    </td>
+                    <td>
+                        <div class="row d-flex flex-column">
+                            {% for price in shoe.prices %}
+                                <div class="col mb-2">
+                                    {{ price.amount ~ ' €' }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="row d-flex flex-column">
+                        {% for price in shoe.prices %}
+                            <div class="col mb-2">
+                                {% for size in price.size %}
+                                    {# {{ dump(loop) }}   On peut se servir de la prop loop, variable native de twig #}
+                                    {# {% if loop.last == false %}
+                                        {{ size ~ ', ' }}
+                                    {% else %}
+                                        {{ size ~ '.'}}
+                                    {% endif %} #}
+                                    {{ size ~ (loop.last ? '.' : ', ') }}
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                        </div>
+                    </td>
+                    <td>
+                        <a href="{{ path('app_admin_shoe_show', {'id': shoe.id}) }}">show</a>
+                        <a href="{{ path('app_admin_shoe_edit', {'id': shoe.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6">Aucune chaussure créée</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

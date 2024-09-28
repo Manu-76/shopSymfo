@@ -31,41 +31,42 @@
                 <div class="collapse navbar-collapse" id="navbarsExample05">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{ path('app_homepage') }}">
-                                Accueil
+                            <a class="nav-link active" aria-current="page" href="#">
+                                Home
                             </a>
                         </li>
-                        {% if is_granted('ROLE_USER')%}
-                            {% if is_granted('ROLE_ADMIN') %}
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">
-                                        Dashboard
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                Link
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" aria-disabled="true">
+                                Disabled
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                                Dropdown
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        Action
                                     </a>
                                 </li>
-                            {% else %}
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">
-                                        Mon Compte
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        Another action
                                     </a>
                                 </li>
-                            {% endif %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_logout') }}">
-                                    Déconnexion
-                                </a>
-                            </li>
-                        {% else %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_login') }}">
-                                    Connexion
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_register') }}">
-                                    Inscription
-                                </a>
-                            </li>
-                        {% endif %}
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        Something else here
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                     <form role="search">
                         <input class="form-control" type="search" placeholder="Search" aria-label="Search">
@@ -73,18 +74,6 @@
                 </div>
             </div>
         </nav>
-
-        <div class="container">
-            {% for label, messages in app.flashes(['success', 'warning', 'danger', 'notice', 'info']) %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ label }} alert-dismissible fade show mt-3">
-                        {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
-                    </div>
-                {% endfor %}
-            {% endfor %}
-        </div>
-
         {% block body %}{% endblock %}
     </body>
 </html>

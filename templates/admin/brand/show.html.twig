@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Brand{% endblock %}
+
+{% block body %}
+
+    <div class="d-flex align-items-center pt-3 ps-3 gap-4">
+        
+        <h1>Voir la marque {{ '"' ~ brand.name ~ '"' }}</h1>
+        <a href="{{ path('app_admin_brand_index') }}" class="btn btn-info">
+            Retour à l'index
+        </a>
+        <a href="{{ path('app_admin_brand_edit', {'id': brand.id}) }}" class="btn btn-primary">
+            Modifier
+        </a>
+    </div>
+    
+    <div class="container container-global my-5 p-3">
+        <table class="table align-middle text-center table-sm">
+            <tbody>
+                <tr>
+                    <th>
+                        Nom de la marque
+                    </th>
+                    <td>
+                        {{ brand.name }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        Image
+                    </th>
+                    <td>
+                        <img src="{{ asset('images/brands/') ~ brand.imageName }}" class="img-shoe">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        {{ include('admin/brand/_delete_form.html.twig') }}
+    </div>
+
+{% endblock %}

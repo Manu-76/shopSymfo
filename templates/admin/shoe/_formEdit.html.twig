@@ -1,0 +1,24 @@
+{{ form_start(form) }}
+    {# {{ form_widget(form) }} #}
+{# {{dump(form)}} #}
+    {{ form_row(form.model) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.imageFile) }}
+    {{ form_row(form.brand) }}
+
+    {% for price in form.prices %}
+        {{ form_row(price.amount) }}
+        {{ form_row(price.size) }}
+    {% endfor %}
+
+    <div class="col">
+        <button type="button" class="btn btn-primary add_item_link mt-3" data-collection-holder-class="prices">Ajouter un formulaire</button>
+
+        {# the data-index attribute is required for the JavaScript code below #}
+        <div class="prices pt-3 g-3"
+            data-index="{{ form.prices|length > 0 ? form.prices|last.vars.name + 1 : 0 }}" data-prototype="{{ form_widget(form.prices.vars.prototype)|e('html_attr') }}"
+        ></div>
+    </div>
+
+    <button class="btn-success btn">{{ button_label|default('Enregistrer') }}</button>
+{{ form_end(form) }}

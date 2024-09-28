@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    New Brand
+{% endblock %}
+
+{% block body %}
+
+    <div class="d-flex align-items-center pt-3 ps-3 gap-3">
+        <h1>
+            Créer une marque
+        </h1>
+        <a href="{{ path('app_admin_brand_index') }}" class="btn btn-info">
+            Retour à l'index
+        </a>
+    </div>
+
+    <div class="container container-global my-5 p-3">
+        {{ include('admin/brand/_form.html.twig') }}
+    </div>
+
+{% endblock %}

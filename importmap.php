@@ -25,4 +25,8 @@ return [
     '@hotwired/turbo' => [
         'version' => '7.3.0',
     ],
+    'addFormPrices' => [
+        'path' => './assets/js/addFormPrices.js',
+        'entrypoint' => true,
+    ],
 ];

@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Shoe{% endblock %}
+
+{% block body %}
+    <div class="d-flex align-items-center pt-3 ps-3 gap-3">
+        <h1>
+            Créer une chaussure
+        </h1>
+        <a href="{{ path('app_admin_shoe_index') }}" class="btn btn-info">
+            <i class="fa fa-hand-o-left me-2" aria-hidden="true"></i>
+            Retour à l'index
+        </a>
+    </div>
+
+    <div class="container container-global my-5 p-3">
+        {{ include('admin/shoe/_form.html.twig') }}
+    </div>
+{% endblock %}
+
+{% block importmap %}
+    {{ parent() }}
+    {{ importmap('addFormPrices') }}
+{% endblock %}
+
