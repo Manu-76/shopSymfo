@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -35,6 +38,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private bool $isVerified = false;
+
+    /**
+     * @var Collection<int, ItemsInCart>
+     */
+    #[ORM\OneToMany(targetEntity: ItemsInCart::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $itemsInCarts;
+
+    #[ORM\Column(type: Types::DECIMAL, precision: 8, scale: 2, nullable: true)]
+    private ?string $totalInCart = null;
+
+    public function __construct()
+    {
+        $this->itemsInCarts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -119,6 +136,48 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ItemsInCart>
+     */
+    public function getItemsInCarts(): Collection
+    {
+        return $this->itemsInCarts;
+    }
+
+    public function addItemsInCart(ItemsInCart $itemsInCart): static
+    {
+        if (!$this->itemsInCarts->contains($itemsInCart)) {
+            $this->itemsInCarts->add($itemsInCart);
+            $itemsInCart->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeItemsInCart(ItemsInCart $itemsInCart): static
+    {
+        if ($this->itemsInCarts->removeElement($itemsInCart)) {
+            // set the owning side to null (unless already changed)
+            if ($itemsInCart->getUser() === $this) {
+                $itemsInCart->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getTotalInCart(): ?string
+    {
+        return $this->totalInCart;
+    }
+
+    public function setTotalInCart(?string $totalInCart): static
+    {
+        $this->totalInCart = $totalInCart;
 
         return $this;
     }

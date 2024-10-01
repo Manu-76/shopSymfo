@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PriceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -23,6 +25,17 @@ class Price
     #[ORM\ManyToOne(inversedBy: 'prices')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Shoe $shoe = null;
+
+    /**
+     * @var Collection<int, ItemsInCart>
+     */
+    #[ORM\OneToMany(targetEntity: ItemsInCart::class, mappedBy: 'price', orphanRemoval: true)]
+    private Collection $itemsInCarts;
+
+    public function __construct()
+    {
+        $this->itemsInCarts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -61,6 +74,36 @@ class Price
     public function setShoe(?Shoe $shoe): static
     {
         $this->shoe = $shoe;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ItemsInCart>
+     */
+    public function getItemsInCarts(): Collection
+    {
+        return $this->itemsInCarts;
+    }
+
+    public function addItemsInCart(ItemsInCart $itemsInCart): static
+    {
+        if (!$this->itemsInCarts->contains($itemsInCart)) {
+            $this->itemsInCarts->add($itemsInCart);
+            $itemsInCart->setPrice($this);
+        }
+
+        return $this;
+    }
+
+    public function removeItemsInCart(ItemsInCart $itemsInCart): static
+    {
+        if ($this->itemsInCarts->removeElement($itemsInCart)) {
+            // set the owning side to null (unless already changed)
+            if ($itemsInCart->getPrice() === $this) {
+                $itemsInCart->setPrice(null);
+            }
+        }
 
         return $this;
     }

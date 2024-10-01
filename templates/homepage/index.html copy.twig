@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Bienvenue chez ShopSymfo - Boutique en ligne!
+{% endblock %}
+
+{% block body %}
+
+    {# Ici je supprime le bg-body-tertiary car ce composant BS est mieux côté que le css de body donc on ne voit plus de bg en bleu #}
+    {# <div class="album py-5 bg-body-tertiary"> #}
+    <div class="album py-5">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% for shoe in shoes %}
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <img src="{{ asset('images/shoes/' ~ shoe.imageName) }}" alt="">
+                                <div class="card-body">
+                                    <h5 class="card-title text-center">
+                                        {{ shoe.model }}
+                                    </h5>
+                                    <p class="card-text">
+                                        {{ shoe.description }}
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="{{ '#exampleModal_' ~ loop.index }}">
+                                                Choisir cet article
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="{{ 'exampleModal_' ~ loop.index }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-xl">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                            {{ shoe.brand.name ~ ' - ' ~ shoe.model }}
+                                        </h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table class="table text-center">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        Prix
+                                                    </th>
+                                                    <th>
+                                                        Taille(s) dispo
+                                                    </th>
+                                                    <th>
+                                                        Quantité
+                                                    </th>
+                                                    <th>
+                                                        Action
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for price in shoe.prices %}
+                                                    <tr>
+                                                        <td>
+                                                            {{ price.amount ~ ' €' }}
+                                                        </td>
+                                                        <td>
+                                                            <select name="size" class="form-select size-select" data-id="{{ price.id }}">
+                                                                <option selected>
+                                                                    Sélectionner une taille
+                                                                </option>
+                                                                {% for size in price.size %}
+                                                                    <option value="{{ size }}">
+                                                                        {{ size }}
+                                                                    </option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <select  name="quantity" class="form-select quantity-select" data-id="{{ price.id }}">
+                                                                <option selected>
+                                                                    Sélectionner une quantité
+                                                                </option>
+                                                                {% for i in range(1,10) %}
+                                                                    <option value="{{ i }}">
+                                                                        {{ i }}
+                                                                    </option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-secondary add-to-cart-btn" data-price-id="{{ price.id }}">
+                                                                Ajouter au panier
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ parent() }}
+        <script src="{{ asset('js/cart.js') }}"></script>
+    <!-- Ajouter un fichier JS pour la gestion des requêtes AJAX -->
+    {% endblock %}
+
+
