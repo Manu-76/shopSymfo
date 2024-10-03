@@ -12,8 +12,7 @@
     {{ include('admin/shoe/_delete_form.html.twig') }}
 {% endblock %}
 
-{% block javascripts %}
+{% block importmap %}
     {{ parent() }}
-    <script src="{{ asset('js/addFormPrices.js') }}"></script>
+    {{ importmap('addFormPrices') }}
 {% endblock %}
-

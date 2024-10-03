@@ -8,6 +8,7 @@ use App\Repository\ShoeRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 // Déclaration de la classe HomepageController qui s'étend du AbstractController et qui permet d'utiliser des méthodes contenues dans AbstractController
 class HomepageController extends AbstractController
@@ -20,6 +21,19 @@ class HomepageController extends AbstractController
         // Action attendue du controller, c'est a dire renvoyer la vue du template au navigateur, avec entre [] la possibilité d'ajout d'option, tel que déclarer une variable et injecter sa valeur dans le template
         return $this->render('homepage/index.html.twig', [
             'shoes' => $shoeRepository->findAll(),
+        ]);
+    }
+
+    #[Route('/search', name:'search', methods: ['GET'])]
+    public function search(Request $request, ShoeRepository $shoeRepository): Response
+    {
+        $value = $request->query->get("search");
+        // dd($value);
+
+        $elementsFound = $shoeRepository->searchItems($value);
+
+        return $this->render('homepage/search.html.twig', [
+            'shoes' => $elementsFound
         ]);
     }
 }
