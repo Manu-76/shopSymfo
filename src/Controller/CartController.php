@@ -4,12 +4,10 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Entity\ItemsInCart;
-use App\Repository\ItemsInCartRepository;
 use App\Repository\PriceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ItemsInCartRepository;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;

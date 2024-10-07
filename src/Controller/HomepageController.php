@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 
 // Déclaration de la classe HomepageController qui s'étend du AbstractController et qui permet d'utiliser des méthodes contenues dans AbstractController
 class HomepageController extends AbstractController
