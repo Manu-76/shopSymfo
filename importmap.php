@@ -29,8 +29,4 @@ return [
         'path' => './assets/js/addFormPrices.js',
         'entrypoint' => true,
     ],
-    'cart' => [
-        'path' => './assets/js/cart.js',
-        'entrypoint' => true,
-    ],
 ];

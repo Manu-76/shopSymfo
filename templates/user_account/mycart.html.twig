@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Hello UserAccountController!
+{% endblock %}
+
+{% block body %}
+    <style>
+        .example-wrapper { margin: 1em auto; width: 85%; font: 18px/1.5 sans-serif; }
+        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    </style>
+
+    <div class="example-wrapper">
+        <h1>
+            Mon Panier
+        </h1>
+
+        {# {{ dump(user) }} #}
+        <table class="table text-center align-middle table-bordered my-5">
+            <thead>
+                <tr>
+                    <th scope="col">
+                        Article
+                    </th>
+                    <th scope="col">
+                        Image
+                    </th>
+                    <th scope="col">
+                        Taille Choisie
+                    </th>
+                    <th scope="col">
+                        Quantité
+                    </th>
+                    <th scope="col">
+                        Prix Unitaire
+                    </th>
+                    <th scope="col">
+                        Total Article
+                    </th>
+                    <th scope="col">
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in user.itemsInCarts %}
+                {# {{dump(item)}} #}
+                <tr>
+                    <td>
+                        {{ item.price.shoe.model }}
+                    </td>
+                    <td>
+                        <img src="{{ asset('images/shoes/' ~ item.price.shoe.imageName) }}" alt="{{ 'image_de_' ~ item.price.shoe.model }}" class="img-shoe">
+                    </td>
+                    <td>
+                        {{ item.sizeSelected }}
+                    </td>
+                    <td>
+                        <a href="{{ path('app_minus_product', {'itemincart': item.id}) }}"><i class="fa fa-minus-square me-2" aria-hidden="true"></i></a>
+                            {{ item.quantity }}
+                        <a href=""><i class="fa fa-plus-square ms-2" aria-hidden="true"></i></a>
+                    </td>
+                    <td>
+                        {{ item.price.amount ~ ' €' }}
+                    </td>
+                    <td>
+                        {{ item.totalPriceItem ~ ' €' }}
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-danger"><i class="fa fa-trash fa-2x" aria-hidden="true"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="6" class="text-uppercase">
+                        Total du panier
+                    </td>
+                    <td>
+                        <b>
+                            {{ user.totalInCart ~ ' €' }}
+                        </b>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-evenly">
+            <a href="" class="btn btn-danger">Vider le panier</a>
+            <a href="" class="btn btn-success">Passer la commande</a>
+        </div>
+    </div>
+{% endblock %}
