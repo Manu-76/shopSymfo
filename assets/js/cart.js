@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(response => response.json())
             .then(result => {
                 if (result.success) {
-                    alert('Produit ajouté au panier !');
+                    alert('Message : ' + result.message);
                 } else {
                     alert('Erreur : ' + result.message);
                 }

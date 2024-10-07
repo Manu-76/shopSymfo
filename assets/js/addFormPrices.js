@@ -5,6 +5,12 @@ window.onload = function() {
             btn.addEventListener("click", addFormToCollection)
         });
 
+    document
+        .querySelectorAll('.delete-price')
+        .forEach(btn => {
+            btn.addEventListener("click", removePriceContainer)
+        });
+
     function addFormToCollection(e) {
         const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
         const item = document.createElement('div');
@@ -35,5 +41,14 @@ window.onload = function() {
             // remove the li for the tag form
             item.remove();
         });
+    }
+
+    // Supprimer le conteneur du prix associé au bouton de suppression
+    function removePriceContainer(e) {
+        e.preventDefault();
+        const container = e.currentTarget.closest('.existing-price');
+        if (container) {
+            container.remove(); // Supprimer le conteneur entier
+        }
     }
 }

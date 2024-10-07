@@ -18,7 +18,8 @@ final class ShoeController extends AbstractController
     public function index(ShoeRepository $shoeRepository): Response
     {
         return $this->render('admin/shoe/index.html.twig', [
-            'shoes' => $shoeRepository->findAll(),
+            'shoesInStock' => $shoeRepository->findBy(['isActive' => true]),
+            'shoesOff' => $shoeRepository->findBy(['isActive' => false])
         ]);
     }
 
@@ -58,7 +59,7 @@ final class ShoeController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_admin_shoe_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Shoe $shoe, EntityManagerInterface $entityManager): Response
+    public function edit(int $id, Request $request, Shoe $shoe, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ShoeType::class, $shoe);
         $form->handleRequest($request);

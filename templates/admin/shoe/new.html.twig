@@ -19,7 +19,6 @@
 {% endblock %}
 
 {% block importmap %}
-    {{ parent() }}
-    {{ importmap('addFormPrices') }}
+    {{ importmap(['app', 'addFormPrices']) }}
 {% endblock %}
 

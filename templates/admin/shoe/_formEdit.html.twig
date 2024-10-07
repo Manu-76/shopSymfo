@@ -5,10 +5,16 @@
     {{ form_row(form.description) }}
     {{ form_row(form.imageFile) }}
     {{ form_row(form.brand) }}
+{# {{ dump(shoe) }} #}
 
     {% for price in form.prices %}
-        {{ form_row(price.amount) }}
-        {{ form_row(price.size) }}
+    <div class="container-fluid border border-black existing-price mb-3" id="{{ 'Tarif_N° ' ~ loop.index }}">
+        {{ form_row(price.amount, {'label': 'Tarif'}) }}
+        {{ form_row(price.size, {'label': 'Tailles choisies'}) }}
+        <button role="button" class="btn btn-warning delete-price" data-id="{{ 'Tarif_N° ' ~ loop.index }}">
+            Supprimer ce tarif
+        </button>
+    </div>
     {% endfor %}
 
     <div class="col">

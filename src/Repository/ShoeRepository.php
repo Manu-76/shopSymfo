@@ -16,6 +16,20 @@ class ShoeRepository extends ServiceEntityRepository
         parent::__construct($registry, Shoe::class);
     }
 
+    /**
+    * @return Shoe[] Returns an array of Shoe objects
+    */
+    public function search($value): array
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.model LIKE :val')
+            ->setParameter('val', '%' . $value . '%')
+            ->orderBy('s.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
     //    /**
     //     * @return Shoe[] Returns an array of Shoe objects
     //     */
